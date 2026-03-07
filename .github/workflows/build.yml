@@ -1,0 +1,28 @@
+name: Build PS2 ELF
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup PS2SDK
+      uses: ps2dev/ps2sdk-action@v1
+      with:
+        version: latest
+
+    - name: Build
+      run: make
+
+    - name: Upload ELF
+      uses: actions/upload-artifact@v4
+      with:
+        name: ulcfg.elf
+        path: ulcfg.elf
