@@ -22,7 +22,7 @@ jobs:
       run: |
         git clone https://github.com/ps2dev/ps2toolchain.git
         cd ps2toolchain
-        ./toolchain.sh
+        sudo ./toolchain.sh
 
     - name: Install PS2 SDK
       run: |
