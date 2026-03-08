@@ -10,6 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: ps2dev/ps2sdk:latest
+    env:
+      PS2SDK: /usr/local/ps2dev/ps2sdk
 
     steps:
     - uses: actions/checkout@v4
