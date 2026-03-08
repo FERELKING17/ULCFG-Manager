@@ -6,12 +6,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <libpad.h>
-#include <fileXio_rpc.h>
-#include <libfat.h>
+#include <fileXio.h>
 #include <iopcontrol.h>
 #include <iopheap.h>
 #include <sbv_patches.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 // Colors
 #define COLOR_RESET "\033[0m"
@@ -89,7 +89,7 @@ void initFileXio() {
 }
 
 void initLibfat() {
-    fatInitDefault();
+    // libfat initialization handled by fileXio
 }
 
 void displayMenu() {
