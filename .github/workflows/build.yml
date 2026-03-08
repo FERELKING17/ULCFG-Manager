@@ -9,30 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: ps2dev/ps2sdk:latest
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: Install dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y build-essential git wget libgmp-dev libmpfr-dev libmpc-dev texinfo bison flex
-
-    - name: Install PS2 Toolchain
-      run: |
-        git clone https://github.com/ps2dev/ps2toolchain.git
-        cd ps2toolchain
-        sudo ./toolchain.sh
-
-    - name: Install PS2 SDK
-      run: |
-        git clone https://github.com/ps2dev/ps2sdk.git
-        cd ps2sdk
-        make
-        sudo make install
-
-    - name: Set PS2SDK
-      run: echo "PS2SDK=/usr/local/ps2dev/ps2sdk" >> $GITHUB_ENV
 
     - name: Build
       run: make
