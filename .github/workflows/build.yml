@@ -16,8 +16,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install make
-      run: apk add --no-cache make
+    - name: Install dependencies
+      run: apk add --no-cache make libmpc mpfr gmp
 
     - name: Build
       run: make
