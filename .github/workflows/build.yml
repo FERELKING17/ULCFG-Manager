@@ -18,7 +18,16 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install dependencies
-      run: apk add --no-cache make mpc mpfr4 gmp && if [ -f /usr/lib/libmpc.so.4 ] && [ ! -f /usr/lib/libmpc.so.3 ]; then ln -s /usr/lib/libmpc.so.4 /usr/lib/libmpc.so.3; fi
+      run: |
+        apk add --no-cache make mpc mpfr4 gmp
+        find /usr/lib -name "libmpc.so*" 2>/dev/null
+        find /usr/lib64 -name "libmpc.so*" 2>/dev/null
+        if [ -f /usr/lib/libmpc.so.4 ]; then
+          ln -sf /usr/lib/libmpc.so.4 /usr/lib/libmpc.so.3
+        elif [ -f /usr/lib64/libmpc.so.4 ]; then
+          ln -sf /usr/lib64/libmpc.so.4 /usr/lib64/libmpc.so.3
+          ln -sf /usr/lib64/libmpc.so.4 /usr/lib/libmpc.so.3
+        fi
 
     - name: Build
       run: make
