@@ -19,13 +19,10 @@ jobs:
 
     - name: Install dependencies
       run: |
-        apk add --no-cache make mpc mpfr4 gmp
-        echo "=== Searching for libmpc files ==="
-        find / -name "libmpc.so*" 2>/dev/null | head -20
-        echo "=== Checking mpc package files ==="
-        apk info -L mpc 2>/dev/null | grep "\.so" || echo "No .so files in mpc package"
-        echo "=== Checking /usr/lib contents ==="
-        ls -la /usr/lib/libm*.so* 2>/dev/null || echo "No libm*.so* files"
+        # Search for packages that provide libmpc
+        apk update
+        apk info | grep -i mpc
+        apk search libmpc
 
     - name: Build
       run: make
