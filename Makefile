@@ -2,7 +2,7 @@ EE_CC = mips64r5900el-ps2-elf-gcc
 EE_BIN = ulcfg.elf
 EE_OBJS = main.o
 EE_LIBS = -lpad -lfileXio -lmc -lusbd -lpoweroff -lfat
-EE_CFLAGS = -O2 -G0 -I$(PS2SDK)/ee/include -I$(PS2SDK)/common/include
+EE_CFLAGS = -D_EE -O2 -G0 -I$(PS2SDK)/ee/include -I$(PS2SDK)/common/include
 EE_LDFLAGS = -L$(PS2SDK)/ee/lib -L$(PS2SDK)/common/lib
 
 all: $(EE_BIN)
