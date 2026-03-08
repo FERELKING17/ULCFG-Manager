@@ -9,20 +9,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: ps2dev/ps2sdk:latest
+    container: ps2dev/ps2sdk:latest
     env:
       PS2SDK: /usr/local/ps2dev/ps2sdk
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install dependencies
+    - name: Install build dependencies
       run: |
-        # Search for packages that provide libmpc
-        apk update
-        apk info | grep -i mpc
-        apk search libmpc
+        apk add --no-cache make gcc build-base
+        # Install mpc-dev which should provide libmpc
+        apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/community mpc-dev mpfr-dev gmp-dev || \
+        apk add --no-cache mpc-tools mpfr-dev gmp-dev || \
+        true
+        # Try to find and list what we have
+        find /usr -name "libmpc*" -o -name "libmpfr*" -o -name "libgmp*" 2>/dev/null | head -20
 
     - name: Build
       run: make
