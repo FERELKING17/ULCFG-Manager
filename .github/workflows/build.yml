@@ -20,14 +20,12 @@ jobs:
     - name: Install dependencies
       run: |
         apk add --no-cache make mpc mpfr4 gmp
-        find /usr/lib -name "libmpc.so*" 2>/dev/null
-        find /usr/lib64 -name "libmpc.so*" 2>/dev/null
-        if [ -f /usr/lib/libmpc.so.4 ]; then
-          ln -sf /usr/lib/libmpc.so.4 /usr/lib/libmpc.so.3
-        elif [ -f /usr/lib64/libmpc.so.4 ]; then
-          ln -sf /usr/lib64/libmpc.so.4 /usr/lib64/libmpc.so.3
-          ln -sf /usr/lib64/libmpc.so.4 /usr/lib/libmpc.so.3
-        fi
+        echo "=== Searching for libmpc files ==="
+        find / -name "libmpc.so*" 2>/dev/null | head -20
+        echo "=== Checking mpc package files ==="
+        apk info -L mpc 2>/dev/null | grep "\.so" || echo "No .so files in mpc package"
+        echo "=== Checking /usr/lib contents ==="
+        ls -la /usr/lib/libm*.so* 2>/dev/null || echo "No libm*.so* files"
 
     - name: Build
       run: make
